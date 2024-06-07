@@ -5,8 +5,6 @@
 void fMostraMat(int m[20][14], char status[20][14]);
 int fMenu();
 void fCriaMat(int m[20][14], char status[20][14]);
-void fMostrarQuartosLivres(int m[20][14], char status[20][14]);
-void fMostrarQuartosOcupados(int m[20][14], char status[20][14]);
 void clearInputBuffer();
 void fRealizarCheckIn(int m[20][14], char status[20][14]);
 void fRealizarCheckOut(int m[20][14], char status[20][14]);
@@ -82,14 +80,22 @@ void fMostraMat(int m[20][14], char status[20][14]) {
         }
         printf("\n");
     }
-    printf("\n---------------------------------------------------------------------\n");
+    printf("\n");
+    system("pause");
+    printf("\n--------------------------------------------------------------------------------------------------------------------------\n");
 }
 
 
 // FUNCAO MENU
 int fMenu() {
-    printf("\nBEM VINDO AO MENU PRINCIPAL DO HOTEL\n");
-    printf("1 - Mostrar Mapa; 2 - Check-in; 3 - Check-out; 4 - Reserva; 5 - Sair\n");
+    printf("\nMENU PRINCIPAL DO HOTEL\n\n");
+    printf("1 - Mostrar Mapa; 2 \n");
+    printf("2 - Check-in;\n");
+    printf("3 - Check-out; \n");
+    printf("4 - Reserva\n");
+    printf("5 - Sair\n");
+    printf("Escolha a opcao acima: ");
+
 
     if (scanf("%d", &menu) != 1) {
         clearInputBuffer();
@@ -173,20 +179,6 @@ void fRealizarCheckIn(int m[20][14], char status[20][14]) {
     count = count + 1;
     printf("Quarto %d nao encontrado.\n", numeroQuarto);
 }
-}
-
-// MOSTRAR QUARTOS LIVRES
-void fMostrarQuartosLivres(int m[20][14], char status[20][14]) {
-    printf("\nQUARTOS LIVRES:\n");
-    for (i = 19; i >= 0; i--) {
-        for (j = 0; j < 14; j++) {
-            if (status[i][j] == '.') {
-                printf(" %3d ", m[i][j]);
-            }
-        }
-        printf("\n");
-    }
-    printf("\n---------------------------------------------------------------------\n");
 }
 
 // SUBMENU CHECK-OUT
