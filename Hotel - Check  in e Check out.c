@@ -65,7 +65,7 @@ void fCriaMat(int m[20][14], char status[20][14]) {
     }
 }
 
-// MOSTRAR MATRIZ
+// MOSTRAR MATRIZ E OCUPAÇÃO
 void fMostraMat(int m[20][14], char status[20][14]) {
     int totalQuartos = 20 * 14;
     int vagos = 0;
