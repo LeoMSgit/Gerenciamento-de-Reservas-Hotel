@@ -1,5 +1,5 @@
 //JLM-Ativ4 - Projeto Hotel
-//João Alfredo, Leonardo, Matheus – 09/06/2024
+//Leonardo, Matheus, João Alfredo – 09/06/2024
 //Controlar a ocupação, check-in, check-out e reservas dos apartamentos do hotel
 
 
@@ -12,15 +12,15 @@ struct stendereco {
     char numero[5];
     char bairro[40];
     char cidade[40];
-    char uf[3]; // Alteração do tamanho de 2 para 3 para incluir o caractere nulo
+    char uf[3]; 
 };
 
 // Estrutura Dados Hospede
 struct stquarto {
     char status;
     char nome[50];
-    char cpf[12]; // Alteração do tamanho de 11 para 12 para incluir o caractere nulo
-    char telefone[12]; // Alteração do tamanho de 11 para 12 para incluir o caractere nulo
+    char cpf[12]; 
+    char telefone[12];
     struct stendereco ender; // Estrutura Dados Hospede - Endereco Aninhada
 };
 
@@ -60,7 +60,7 @@ void fCriaMat(int m[20][14], char status[20][14]) {
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 14; j++) {
             m[i][j] = count++;
-            status[i][j] = '.'; // Todos os quartos comecam como livres
+            status[i][j] = '.';
         }
     }
 }
@@ -148,7 +148,7 @@ void fRealizarCheckIn(int m[20][14], char status[20][14]) {
     if (andarQuarto == 0) {
         return;
     }
-    // Validar se o número do andar
+    // Validar se o número do andar é válido
     if (andarQuarto < 1 || andarQuarto > 20) {
         printf("Numero do andar invalido! Por favor, tente novamente.\n");
         return;
@@ -238,9 +238,9 @@ void fRealizarCheckOut(int m[20][14], char status[20][14]) {
                     printf("Check-out realizado com sucesso no quarto %d %d.\n", andarQuarto, numeroQuarto);
                     fMostraMat(m, status); // Imprime a matriz após o check-out
                 } else if (status[i][j] == 'R') {
-                    printf("O quarto %d %d está reservado. Não é possível fazer check-out.\n", andarQuarto, numeroQuarto);
+                    printf("O quarto %d %d esta reservado. Nao e possivel fazer check-out.\n", andarQuarto, numeroQuarto);
                 } else {
-                    printf("O quarto %d %d já está livre.\n", andarQuarto, numeroQuarto);
+                    printf("O quarto %d %d ja esta livre.\n", andarQuarto, numeroQuarto);
                 }
                 return;
             }
