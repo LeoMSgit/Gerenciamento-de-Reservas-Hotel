@@ -67,6 +67,10 @@ void fCriaMat(int m[20][14], char status[20][14]) {
 
 // MOSTRAR MATRIZ
 void fMostraMat(int m[20][14], char status[20][14]) {
+    int totalQuartos = 20 * 14;
+    int vagos = 0;
+    int ocupados = 0;
+
     printf("Quartos: ");
     for (int k = 0; k < 14; k++) {
         printf("\t%d", k + 1);
@@ -76,10 +80,17 @@ void fMostraMat(int m[20][14], char status[20][14]) {
         printf("Andar %2d: ", 20 - i); // Imprimindo o andar correspondente
         for (int j = 0; j < 14; j++) {
             printf("\t%c", status[19 - i][j]);
+            if (status[19 - i][j] == '.') {
+                vagos++;
+            } else if (status[19 - i][j] == 'O' || status[19 - i][j] == 'R') {
+                ocupados++;
+            }
         }
         printf("\n");
     }
     printf("\n---------------------------------------------------------------------\n");
+    printf("Porcentagem de quartos vagos: %.2f%%\n", ((float)vagos / totalQuartos) * 100);
+    printf("Porcentagem de quartos ocupados: %.2f%%\n", ((float)ocupados / totalQuartos) * 100);
 }
 
 // MENU PRINCIPAL
