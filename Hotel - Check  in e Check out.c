@@ -1,6 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Estrutura Dados Hospede - Endereco
+struct stendereco {
+    char rua[100];
+    char numero[5];
+    char bairro[40];
+    char cidade[40];
+    char uf[3]; // Alteração do tamanho de 2 para 3 para incluir o caractere nulo
+};
+
+// Estrutura Dados Hospede
+struct stquarto {
+    char status;
+    char nome[50];
+    char cpf[12]; // Alteração do tamanho de 11 para 12 para incluir o caractere nulo
+    char telefone[12]; // Alteração do tamanho de 11 para 12 para incluir o caractere nulo
+    struct stendereco ender; // Estrutura Dados Hospede - Endereco Aninhada
+};
+
 // Declaração Funções
 void fMostraMat(int m[20][14], char status[20][14]);
 int fMenu();
@@ -15,35 +33,11 @@ void fCancelarReserva(int m[20][14], char status[20][14]);
 int n = 1;
 int m[20][14];
 char status[20][14]; // Matriz para armazenar o status dos quartos
-int i;
-int j; 
-int menu = 0;
-int quarto = 1;
-
-// Estrutura Dados Hospede - Endereco
-struct stendereco
-{
-    char rua[100];
-    char numero[5];
-    char bairro[40];
-    char cidade[40];
-    char uf[2];            
-};
-
-// Estrutura Dados Hospede
-struct stquarto
-{
-    char status;
-    char nome[50];
-    char cpf[11];
-    char telefone[11];
-    struct stendereco ender;    // Estrutura Dados Hospede - Endereco Aninhada
-};
 
 // FUNCAO PRINCIPAL
-int main (){
+int main() {
     fCriaMat(m, status);
-    while (1){ // Loop continuo ate o usuario optar por sair
+    while (1) { // Loop continuo ate o usuario optar por sair
         if (fMenu() == 6) {
             printf("\n\nSaindo do sistema.\n");
             break; // Sai do loop e termina o programa
@@ -52,7 +46,7 @@ int main (){
     return 0;
 }
 
-// CRIAR MATRIZ 
+// CRIAR MATRIZ
 void fCriaMat(int m[20][14], char status[20][14]) {
     // Variavel para preencher a matriz
     int count = 1;
@@ -68,12 +62,13 @@ void fCriaMat(int m[20][14], char status[20][14]) {
 
 // MOSTRAR MATRIZ
 void fMostraMat(int m[20][14], char status[20][14]) {
-	printf("Quartos: ");
-	for (int k = 0; k < 14; k++) {
-        printf("\t%d", k + 1);}  		// Imprimindo o apartamento correspondente
+    printf("Quartos: ");
+    for (int k = 0; k < 14; k++) {
+        printf("\t%d", k + 1);
+    } // Imprimindo o apartamento correspondente
     printf("\n");
-	for (int i = 0; i < 20; i++) {
-        printf("Andar %2d: ", 20 - i);  // Imprimindo o andar correspondente
+    for (int i = 0; i < 20; i++) {
+        printf("Andar %2d: ", 20 - i); // Imprimindo o andar correspondente
         for (int j = 0; j < 14; j++) {
             printf("\t%c", status[19 - i][j]);
         }
@@ -82,7 +77,7 @@ void fMostraMat(int m[20][14], char status[20][14]) {
     printf("\n---------------------------------------------------------------------\n");
 }
 
-
+// MENU PRINCIPAL
 int fMenu() {
     int menu; // Declaração da variável menu
 
@@ -113,14 +108,13 @@ int fMenu() {
             fCancelarReserva(m, status);
             break;
         case 6:
-            return 6; // Retorna 0 para sair do programa
+            return 6; // Retorna 6 para sair do programa
         default:
             printf("Opcao invalida! Por favor, tente novamente.\n");
     }
 
     return 1; // Retorna 1 para continuar no menu
 }
-
 
 // REALIZAR CHECK-IN
 void fRealizarCheckIn(int m[20][14], char status[20][14]) {
@@ -159,7 +153,7 @@ void fRealizarCheckIn(int m[20][14], char status[20][14]) {
         printf("Numero do quarto invalido! Por favor, tente novamente.\n");
         return;
     }
-    
+
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 14; j++) {
             if (i == (andarQuarto - 1) && j == (numeroQuarto - 1)) {
@@ -178,7 +172,6 @@ void fRealizarCheckIn(int m[20][14], char status[20][14]) {
     }
     printf("Quarto %d nao encontrado.\n", numeroQuarto);
 }
-
 
 // REALIZAR CHECK-OUT
 void fRealizarCheckOut(int m[20][14], char status[20][14]) {
@@ -225,7 +218,7 @@ void fRealizarCheckOut(int m[20][14], char status[20][14]) {
         for (int j = 0; j < 14; j++) {
             if (i == (andarQuarto - 1) && j == (numeroQuarto - 1)) {
                 if (status[i][j] == 'O') { // Ocupado
-                    status[i][j] = '.';     // Vago
+                    status[i][j] = '.'; // Vago
                     printf("Check-out realizado com sucesso no quarto %d %d.\n", andarQuarto, numeroQuarto);
                     fMostraMat(m, status); // Imprime a matriz após o check-out
                 } else if (status[i][j] == 'R') {
@@ -276,7 +269,7 @@ void fRealizarReserva(int m[20][14], char status[20][14]) {
         printf("Numero do quarto invalido! Por favor, tente novamente.\n");
         return;
     }
-    
+
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 14; j++) {
             if (i == (andarQuarto - 1) && j == (numeroQuarto - 1)) {
@@ -333,7 +326,7 @@ void fCancelarReserva(int m[20][14], char status[20][14]) {
         printf("Numero do quarto invalido! Por favor, tente novamente.\n");
         return;
     }
-    
+
     for (int i = 0; i < 20; i++) {
         for (int j = 0; j < 14; j++) {
             if (i == (andarQuarto - 1) && j == (numeroQuarto - 1)) {
@@ -350,11 +343,9 @@ void fCancelarReserva(int m[20][14], char status[20][14]) {
             }
         }
     }
-    printf("Quarto %d nao encontrado.\n", numeroQuarto);
 }
-    
 
-// LIMPAS BUFFER DE ENTRADA                              
+// LIMPAS BUFFER DE ENTRADA
 void clearInputBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {}
