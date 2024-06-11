@@ -43,7 +43,7 @@ char status[20][14]; // Matriz para armazenar o status dos quartos
 int main() {
     fCriaMat(m, status);
     while (1) { // Loop continuo ate o usuario optar por sair
-        if (fMenu() == 6) {
+        if (fMenu() == 7) {
             printf("\n\nSaindo do sistema.\n");
             break; // Sai do loop e termina o programa
         }
@@ -70,6 +70,7 @@ void fMostraMat(int m[20][14], char status[20][14]) {
     int totalQuartos = 20 * 14;
     int vagos = 0;
     int ocupados = 0;
+    int reservados = 0;
 
     printf("Quartos: ");
     for (int k = 0; k < 14; k++) {
@@ -82,15 +83,18 @@ void fMostraMat(int m[20][14], char status[20][14]) {
             printf("\t%c", status[19 - i][j]);
             if (status[19 - i][j] == '.') {
                 vagos++;
-            } else if (status[19 - i][j] == 'O' || status[19 - i][j] == 'R') {
+            } else if (status[19 - i][j] == 'O') {
                 ocupados++;
-            }
+            } else if (status[19 - i][j] == 'R') {
+            	reservados++;
+			}
         }
         printf("\n");
     }
     printf("\n---------------------------------------------------------------------\n");
     printf("Porcentagem de quartos vagos: %.2f%%\n", ((float)vagos / totalQuartos) * 100);
     printf("Porcentagem de quartos ocupados: %.2f%%\n", ((float)ocupados / totalQuartos) * 100);
+    printf("Porcentagem de quartos reservados: %.2f%%\n", ((float)reservados / totalQuartos) * 100);
 }
 
 // MENU PRINCIPAL
@@ -98,7 +102,7 @@ int fMenu() {
     int menu; // Declaração da variável menu
 
     printf("\nBEM VINDO AO MENU PRINCIPAL DO HOTEL\n");
-    printf("1 - Mostrar Mapa; 2 - Check-in; 3 - Check-out; 4 - Realizar Reserva; 5 - Cancelar Reserva; 6 - Sair\n");
+    printf("1 - Mostrar Mapa;\n2 - Check-in;\n3 - Check-out;\n4 - Realizar Reserva;\n5 - Cancelar Reserva;\n6 - Informacoes do Hospede;\n7 - Sair;\n");
 
     if (scanf("%d", &menu) != 1) {
         clearInputBuffer();
@@ -124,9 +128,11 @@ int fMenu() {
             fCancelarReserva(m, status);
             break;
         case 6:
-            return 6; // Retorna 6 para sair do programa
+            printf("\nSTRUCTURE HOSPEDES - Joao"); //Chamada de Andar x Quarto que mostra a variavel Structure
+        case 7:
+            return 7; // Retorna 6 para sair do programa
         default:
-            printf("Opcao invalida! Por favor, tente novamente.\n");
+            printf("\nOpcao invalida! Por favor, tente novamente.\n");
     }
 
     return 1; // Retorna 1 para continuar no menu
@@ -178,7 +184,7 @@ void fRealizarCheckIn(int m[20][14], char status[20][14]) {
                     printf("Check-in realizado com sucesso no quarto %d %d.\n", andarQuarto, numeroQuarto);
                     fMostraMat(m, status); // Imprime a matriz após o check-in
                 } else if (status[i][j] == 'R') {
-                    printf("O quarto %d %d esta reservado. Não é possível fazer check-in.\n", andarQuarto, numeroQuarto);
+                    printf("O quarto %d %d esta reservado.\n", andarQuarto, numeroQuarto);
                 } else {
                     printf("O quarto %d %d ja esta ocupado.\n", andarQuarto, numeroQuarto);
                 }
