@@ -1,3 +1,9 @@
+//JLM-Ativ4 - Projeto Hotel
+//Leonardo, Matheus, João Alfredo – 09/06/2024
+//Controlar a ocupação, check-in, check-out e reservas dos apartamentos do hotel
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
