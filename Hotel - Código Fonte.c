@@ -2,6 +2,8 @@
 //Leonardo, Matheus, João Alfredo – 09/06/2024
 //Controlar a ocupação, check-in, check-out e reservas dos apartamentos do hotel
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,6 +31,7 @@ struct stquarto {
 // Declaração Funções
 void fMostraMat(int m[20][14], struct stquarto quartos[20][14]);
 int fMenu();
+void fLinha();
 void fCriaMat(int m[20][14], struct stquarto quartos[20][14]);
 void clearInputBuffer();
 void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]);
@@ -98,19 +101,20 @@ void fMostraMat(int m[20][14], struct stquarto quartos[20][14]) {
 		}
 		printf("\n");
 	}
-	printf("\n---------------------------------------------------------------------\n");
+	printf("\n-------------------------------------------------------------------------------------------------------------------------\n");
 	printf("Porcentagem de quartos vagos: %.2f%%\n", ((float)vagos / totalQuartos) * 100);
 	printf("Porcentagem de quartos ocupados: %.2f%%\n", ((float)ocupados / totalQuartos) * 100);
-	printf("Porcentagem de quartos reservados: %.2f%%\n", ((float)reservados / totalQuartos) * 100);
+	printf("Porcentagem de quartos reservados: %.2f%%\n\n", ((float)reservados / totalQuartos) * 100);
 }
 
 // MENU PRINCIPAL
 int fMenu() {
 	int menu; // Declaração da variável menu
-
+      
+      fLinha();
 	printf("\nBEM VINDO AO MENU PRINCIPAL DO HOTEL\n");
 	printf("1 - Mostrar Mapa;\n2 - Check-in;\n3 - Check-out;\n4 - Realizar Reserva;\n5 - Cancelar Reserva;\n6 - Informacoes do Hospede;\n7 - Sair;\n");
-	printf("Digite uma opcao: ");
+	printf("\nDigite uma opcao: ");
 	if (scanf("%d", &menu) != 1) {
 		clearInputBuffer();
 		printf("Entrada invalida! Por favor, insira um numero.\n");
@@ -119,25 +123,40 @@ int fMenu() {
 
 	switch (menu) {
 		case 1:
+			fLinha();
 			printf("\nIMPRIMINDO MAPA...\n\n");
 			fMostraMat(m, quartos);
+			system("pause");
 			break;
 		case 2:
+			fLinha();
 			fRealizarCheckIn(m, quartos);
+			system("pause");
 			break;
 		case 3:
+			fLinha();
 			fRealizarCheckOut(m, quartos);
+			system("pause");
 			break;
 		case 4:
+			fLinha();
 			fRealizarReserva(m, quartos);
+			system("pause");
 			break;
 		case 5:
+			fLinha();
 			fCancelarReserva(m, quartos);
+			system("pause");
 			break;
 		case 6:
+			fLinha();
 			fInformacoesHospede(m, quartos);
+			system("pause");
 			break;
 		case 7:
+			fLinha();
+			printf("Saindo do programa... ");
+			system("pause");
 			return 7; // Retorna 7 para sair do programa
 		default:
 			printf("\nOpcao invalida! Por favor, tente novamente.\n");
@@ -155,7 +174,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 	printf("\nDigite o numero do andar para check-in (0 para retornar ao Menu): ");
 	if (scanf("%d", &andarQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -164,14 +183,14 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do andar é válido
 	if (andarQuarto < 1 || andarQuarto > 20) {
-		printf("Numero do andar invalido! Por favor, tente novamente.\n");
+		printf("Numero do andar invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
 	printf("\nDigite o numero do quarto para check-in (0 para retornar ao Menu): ");
 	if (scanf("%d", &numeroQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -180,7 +199,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do quarto é válido
 	if (numeroQuarto < 1 || numeroQuarto > 14) {
-		printf("Numero do quarto invalido! Por favor, tente novamente.\n");
+		printf("Numero do quarto invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
@@ -200,7 +219,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.nome) == 0 || !nomeValido) {
-			printf("Nome do hospede invalido! Por favor, insira um nome valido sem numeros.\n");
+			printf("Nome do hospede invalido! Por favor, insira um nome valido sem numeros.\n\n");
 			return;
 		}
 
@@ -217,7 +236,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.cpf) != 11 || !cpfValido) {
-			printf("CPF do hospede invalido! Por favor, insira um CPF valido.\n");
+			printf("CPF do hospede invalido! Por favor, insira um CPF valido.\n\n");
 			return;
 		}
 
@@ -238,7 +257,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.telefone) != 11 || digitCount != 11 || !telefoneValido) {
-			printf("Telefone do hospede invalido! Por favor, insira um telefone valido.\n");
+			printf("Telefone do hospede invalido! Por favor, insira um telefone valido.\n\n");
 			return;
 		}
 
@@ -257,7 +276,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.email) == 0 || !emailValido) {
-			printf("Email do hospede invalido! Por favor, insira um email valido.\n");
+			printf("Email do hospede invalido! Por favor, insira um email valido.\n\n");
 		}
 
 		// Preencher dados do endereço
@@ -275,7 +294,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.ender.rua) == 0 || !ruaValido) {
-			printf("Rua do hospede invalido! Por favor, insira um valor valido.\n");
+			printf("Rua do hospede invalido! Por favor, insira um valor valido.\n\n");
 			return;
 		}
 
@@ -297,7 +316,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 		}
 
 		if (!numeroValido) {
-			printf("Numero do hospede invalido! Por favor, insira um valor numerico valido.\n");
+			printf("Numero do hospede invalido! Por favor, insira um valor numerico valido.\n\n");
 			return;
 		}
 
@@ -314,7 +333,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.ender.bairro) == 0 || !bairroValido) {
-			printf("Bairro do hospede invalido! Por favor, insira um valor valido.\n");
+			printf("Bairro do hospede invalido! Por favor, insira um valor valido.\n\n");
 			return;
 		}
 
@@ -331,7 +350,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.ender.cidade) == 0 || !cidadeValida) {
-			printf("Cidade do hospede invalida! Por favor, insira um valor valido.\n");
+			printf("Cidade do hospede invalida! Por favor, insira um valor valido.\n\n");
 			return;
 		}
 
@@ -345,7 +364,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			ufValido = 0;
 		}
 		if (!ufValido) {
-			printf("UF do hospede invalido! Por favor, insira um UF valido.\n");
+			printf("UF do hospede invalido! Por favor, insira um UF valido.\n\n");
 			return;
 		}
 
@@ -363,7 +382,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 		printf("\nCheck-in de %s realizado com sucesso, no quarto %d do andar %d!\n\n", novoHospede.nome, numeroQuarto, andarQuarto);
 
 	} else {
-		printf("\nQuarto ja ocupado ou reservado!\n");
+		printf("\nQuarto ja ocupado ou reservado!\n\n");
 	}
 	fMostraMat(m, quartos);
 }
@@ -377,7 +396,7 @@ void fRealizarCheckOut(int m[20][14], struct stquarto quartos[20][14]) {
 	printf("\nDigite o numero do andar para check-out (0 para retornar ao Menu): ");
 	if (scanf("%d", &andarQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -386,14 +405,14 @@ void fRealizarCheckOut(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do andar é válido
 	if (andarQuarto < 1 || andarQuarto > 20) {
-		printf("Numero do andar invalido! Por favor, tente novamente.\n");
+		printf("Numero do andar invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
 	printf("\nDigite o numero do quarto para check-out (0 para retornar ao Menu): ");
 	if (scanf("%d", &numeroQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -402,7 +421,7 @@ void fRealizarCheckOut(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do quarto é válido
 	if (numeroQuarto < 1 || numeroQuarto > 14) {
-		printf("Numero do quarto invalido! Por favor, tente novamente.\n");
+		printf("Numero do quarto invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
@@ -415,7 +434,7 @@ void fRealizarCheckOut(int m[20][14], struct stquarto quartos[20][14]) {
 		quartos[andarQuarto - 1][numeroQuarto - 1].status = '.';
 		printf("\nCheck-out de %s realizado com sucesso, no quarto %d do andar %d!\n\n", nomeHospede, numeroQuarto, andarQuarto);
 	} else {
-		printf("\nQuarto nao esta ocupado! Por favor, selecione um quarto ocupado para realizar check-out.\n");
+		printf("\nQuarto nao esta ocupado! Por favor, selecione um quarto ocupado para realizar check-out.\n\n");
 	}
 	fMostraMat(m, quartos);
 }
@@ -430,7 +449,7 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 	printf("\nDigite o numero do andar para check-in (0 para retornar ao Menu): ");
 	if (scanf("%d", &andarQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -439,14 +458,14 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do andar é válido
 	if (andarQuarto < 1 || andarQuarto > 20) {
-		printf("Numero do andar invalido! Por favor, tente novamente.\n");
+		printf("Numero do andar invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
 	printf("\nDigite o numero do quarto para check-in (0 para retornar ao Menu): ");
 	if (scanf("%d", &numeroQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -455,7 +474,7 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do quarto é válido
 	if (numeroQuarto < 1 || numeroQuarto > 14) {
-		printf("Numero do quarto invalido! Por favor, tente novamente.\n");
+		printf("Numero do quarto invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
@@ -475,7 +494,7 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.nome) == 0 || !nomeValido) {
-			printf("Nome do hospede invalido! Por favor, insira um nome valido sem numeros.\n");
+			printf("Nome do hospede invalido! Por favor, insira um nome valido sem numeros.\n\n");
 			return;
 		}
 
@@ -492,7 +511,7 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.cpf) != 11 || !cpfValido) {
-			printf("CPF do hospede invalido! Por favor, insira um CPF valido.\n");
+			printf("CPF do hospede invalido! Por favor, insira um CPF valido.\n\n");
 			return;
 		}
 
@@ -513,7 +532,7 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.telefone) != 11 || digitCount != 11 || !telefoneValido) {
-			printf("Telefone do hospede invalido! Por favor, insira um telefone valido.\n");
+			printf("Telefone do hospede invalido! Por favor, insira um telefone valido.\n\n");
 			return;
 		}
 
@@ -532,7 +551,7 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 			}
 		}
 		if (strlen(novoHospede.email) == 0 || !emailValido) {
-			printf("Email do hospede invalido! Por favor, insira um email valido.\n");
+			printf("Email do hospede invalido! Por favor, insira um email valido.\n\n");
 		}
 
 
@@ -544,7 +563,7 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 		printf("\nCheck-in de %s realizado com sucesso, no quarto %d do andar %d!\n\n", novoHospede.nome, numeroQuarto, andarQuarto);
 
 	} else {
-		printf("\nQuarto ja ocupado ou reservado!\n");
+		printf("\nQuarto ja ocupado ou reservado!\n\n");
 	}
 	fMostraMat(m, quartos);
 }
@@ -557,7 +576,7 @@ void fCancelarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 	printf("\nDigite o numero do andar para cancelar reserva (0 para retornar ao Menu): ");
 	if (scanf("%d", &andarQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -566,14 +585,14 @@ void fCancelarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do andar é válido
 	if (andarQuarto < 1 || andarQuarto > 20) {
-		printf("Numero do andar invalido! Por favor, tente novamente.\n");
+		printf("Numero do andar invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
 	printf("\nDigite o numero do quarto para cancelar reserva (0 para retornar ao Menu): ");
 	if (scanf("%d", &numeroQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -582,7 +601,7 @@ void fCancelarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do quarto é válido
 	if (numeroQuarto < 1 || numeroQuarto > 14) {
-		printf("Numero do quarto invalido! Por favor, tente novamente.\n");
+		printf("Numero do quarto invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
@@ -590,7 +609,7 @@ void fCancelarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 		quartos[andarQuarto - 1][numeroQuarto - 1].status = '.';
 		printf("\nCancelamento de reserva de %s realizada com sucesso, no quarto %d do andar %d!\n\n", quartos[andarQuarto - 1][numeroQuarto - 1].nome, numeroQuarto, andarQuarto);
 	} else {
-		printf("\nQuarto nao esta reservado! Por favor, selecione um quarto reservado para cancelar a reserva.\n");
+		printf("\nQuarto nao esta reservado! Por favor, selecione um quarto reservado para cancelar a reserva.\n\n");
 	}
 	fMostraMat(m, quartos);
 }
@@ -604,7 +623,7 @@ void fInformacoesHospede(int m[20][14], struct stquarto quartos[20][14]) {
 	printf("\nDigite o numero do andar para consultar informacoes (0 para retornar ao Menu): ");
 	if (scanf("%d", &andarQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -613,14 +632,14 @@ void fInformacoesHospede(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do andar é válido
 	if (andarQuarto < 1 || andarQuarto > 20) {
-		printf("Numero do andar invalido! Por favor, tente novamente.\n");
+		printf("Numero do andar invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
 	printf("\nDigite o numero do quarto para consultar informacoes (0 para retornar ao Menu): ");
 	if (scanf("%d", &numeroQuarto) != 1) {
 		clearInputBuffer();
-		printf("Entrada invalida! Por favor, insira um numero.\n");
+		printf("Entrada invalida! Por favor, insira um numero.\n\n");
 		return;
 	}
 	// Retorno Menu Principal
@@ -629,7 +648,7 @@ void fInformacoesHospede(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 	// Validar se o número do quarto é válido
 	if (numeroQuarto < 1 || numeroQuarto > 14) {
-		printf("Numero do quarto invalido! Por favor, tente novamente.\n");
+		printf("Numero do quarto invalido! Por favor, tente novamente.\n\n");
 		return;
 	}
 
@@ -647,8 +666,14 @@ void fInformacoesHospede(int m[20][14], struct stquarto quartos[20][14]) {
 
 		printf("\nInformacoes de %s consultadas com sucesso, no quarto %d do andar %d!\n\n", quartos[andarQuarto - 1][numeroQuarto - 1].nome, numeroQuarto, andarQuarto);
 	} else {
-		printf("\nQuarto nao esta ocupado! Por favor, selecione um quarto ocupado para consultar informacoes.\n");
+		printf("\nQuarto nao esta ocupado! Por favor, selecione um quarto ocupado para consultar informacoes.\n\n");
 	}
+}
+
+//Fução linha de separação
+void fLinha()
+{
+	printf("\n--------------------------------------------------------------------------------------------------------------------------------------------------\n");
 }
 
 // LIMPAS BUFFER DE ENTRADA
