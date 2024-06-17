@@ -1,5 +1,5 @@
 //JLM-Ativ4 - Projeto Hotel
-//Leonardo, Matheus, João Alfredo – 09/06/2024
+//Leonardo, Matheus, João Alfredo – 16/06/2024
 //Controlar a ocupação, check-in, check-out e reservas dos apartamentos do hotel
 
 #include <stdio.h>
@@ -98,7 +98,7 @@ void fMostraMat(int m[20][14], struct stquarto quartos[20][14]) {
 		}
 		printf("\n");
 	}
-	printf("\n---------------------------------------------------------------------\n");
+	printf("\n-------------------------------------------------------------------------------------------------------------------------\n");
 	printf("Porcentagem de quartos vagos: %.2f%%\n", ((float)vagos / totalQuartos) * 100);
 	printf("Porcentagem de quartos ocupados: %.2f%%\n", ((float)ocupados / totalQuartos) * 100);
 	printf("Porcentagem de quartos reservados: %.2f%%\n", ((float)reservados / totalQuartos) * 100);
@@ -107,7 +107,7 @@ void fMostraMat(int m[20][14], struct stquarto quartos[20][14]) {
 // MENU PRINCIPAL
 int fMenu() {
 	int menu; // Declaração da variável menu
-
+	printf("\n-------------------------------------------------------------------------------------------------------------------------\n");
 	printf("\nBEM VINDO AO MENU PRINCIPAL DO HOTEL\n");
 	printf("1 - Mostrar Mapa;\n2 - Check-in;\n3 - Check-out;\n4 - Realizar Reserva;\n5 - Cancelar Reserva;\n6 - Informacoes do Hospede;\n7 - Sair;\n");
 	printf("Digite uma opcao: ");
@@ -262,7 +262,6 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 
 		// Preencher dados do endereço
 		printf("\nDigite a rua do hospede (apenas nome): ");
-		clearInputBuffer();
 		fgets(novoHospede.ender.rua, sizeof(novoHospede.ender.rua), stdin);
 		strtok(novoHospede.ender.rua, "\n"); // Remover a quebra de linha do final
 
@@ -279,7 +278,7 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			return;
 		}
 
-		printf("\nDigite o numero do hospede: ");
+		printf("\nDigite o numero da residencia do hospede: ");
 		fgets(novoHospede.ender.numero, sizeof(novoHospede.ender.numero), stdin);
 		strtok(novoHospede.ender.numero, "\n"); // Remover a quebra de linha do final
 
@@ -535,11 +534,10 @@ void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
 			printf("Email do hospede invalido! Por favor, insira um email valido.\n");
 		}
 
-
 		// Atualiza as informações do quarto e altera o status para ocupado
 		strcpy(quartos[andarQuarto - 1][numeroQuarto - 1].nome, novoHospede.nome);
 		strcpy(quartos[andarQuarto - 1][numeroQuarto - 1].cpf, novoHospede.cpf);
-		quartos[andarQuarto - 1][numeroQuarto - 1].status = 'O'; // Ocupado
+		quartos[andarQuarto - 1][numeroQuarto - 1].status = 'R'; // Ocupado
 
 		printf("\nCheck-in de %s realizado com sucesso, no quarto %d do andar %d!\n\n", novoHospede.nome, numeroQuarto, andarQuarto);
 
