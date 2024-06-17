@@ -2,8 +2,6 @@
 //Leonardo, Matheus, João Alfredo – 09/06/2024
 //Controlar a ocupação, check-in, check-out e reservas dos apartamentos do hotel
 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -24,6 +22,7 @@ struct stquarto {
 	char nome[50];
 	char cpf[12];
 	char telefone[12];
+	char email[50];
 	struct stendereco ender; // Estrutura Dados Hospede - Endereco Aninhada
 };
 
@@ -243,6 +242,24 @@ void fRealizarCheckIn(int m[20][14], struct stquarto quartos[20][14]) {
 			return;
 		}
 
+		// Digitar o email do hóspede
+		printf("\nDigite o email do hospede: ");
+		clearInputBuffer();
+		fgets(novoHospede.email, sizeof(novoHospede.email), stdin);
+		strtok(novoHospede.email, "\n"); // Remover a quebra de linha do final
+
+		// Validar se o email não está em branco e contém o símbolo '@'
+		int emailValido = 0;
+		for (int i = 0; novoHospede.email[i] != '\0'; i++) {
+			if (novoHospede.email[i] == '@') {
+				emailValido = 1;
+				break;
+			}
+		}
+		if (strlen(novoHospede.email) == 0 || !emailValido) {
+			printf("Email do hospede invalido! Por favor, insira um email valido.\n");
+		}
+
 		// Preencher dados do endereço
 		printf("\nDigite a rua do hospede (apenas nome): ");
 		clearInputBuffer();
@@ -406,90 +423,130 @@ void fRealizarCheckOut(int m[20][14], struct stquarto quartos[20][14]) {
 
 // REALIZAR RESERVA
 void fRealizarReserva(int m[20][14], struct stquarto quartos[20][14]) {
-    int andarQuarto;
-    int numeroQuarto;
-    struct stquarto novoHospede;
+	int andarQuarto;
+	int numeroQuarto;
+	struct stquarto novoHospede;
 
-    printf("\nDigite o numero do andar para check-in (0 para retornar ao Menu): ");
-    if (scanf("%d", &andarQuarto) != 1) {
-        clearInputBuffer();
-        printf("Entrada invalida! Por favor, insira um numero.\n");
-        return;
-    }
-    // Retorno Menu Principal
-    if (andarQuarto == 0) {
-        return;
-    }
-    // Validar se o número do andar é válido
-    if (andarQuarto < 1 || andarQuarto > 20) {
-        printf("Numero do andar invalido! Por favor, tente novamente.\n");
-        return;
-    }
+	printf("\nDigite o numero do andar para check-in (0 para retornar ao Menu): ");
+	if (scanf("%d", &andarQuarto) != 1) {
+		clearInputBuffer();
+		printf("Entrada invalida! Por favor, insira um numero.\n");
+		return;
+	}
+	// Retorno Menu Principal
+	if (andarQuarto == 0) {
+		return;
+	}
+	// Validar se o número do andar é válido
+	if (andarQuarto < 1 || andarQuarto > 20) {
+		printf("Numero do andar invalido! Por favor, tente novamente.\n");
+		return;
+	}
 
-    printf("\nDigite o numero do quarto para check-in (0 para retornar ao Menu): ");
-    if (scanf("%d", &numeroQuarto) != 1) {
-        clearInputBuffer();
-        printf("Entrada invalida! Por favor, insira um numero.\n");
-        return;
-    }
-    // Retorno Menu Principal
-    if (numeroQuarto == 0) {
-        return;
-    }
-    // Validar se o número do quarto é válido
-    if (numeroQuarto < 1 || numeroQuarto > 14) {
-        printf("Numero do quarto invalido! Por favor, tente novamente.\n");
-        return;
-    }
+	printf("\nDigite o numero do quarto para check-in (0 para retornar ao Menu): ");
+	if (scanf("%d", &numeroQuarto) != 1) {
+		clearInputBuffer();
+		printf("Entrada invalida! Por favor, insira um numero.\n");
+		return;
+	}
+	// Retorno Menu Principal
+	if (numeroQuarto == 0) {
+		return;
+	}
+	// Validar se o número do quarto é válido
+	if (numeroQuarto < 1 || numeroQuarto > 14) {
+		printf("Numero do quarto invalido! Por favor, tente novamente.\n");
+		return;
+	}
 
-    if (quartos[andarQuarto - 1][numeroQuarto - 1].status == '.') {
-        // Preencher dados do hospede
-        printf("\nDigite o nome do hospede: ");
-        clearInputBuffer();
-        fgets(novoHospede.nome, sizeof(novoHospede.nome), stdin);
-        strtok(novoHospede.nome, "\n"); // Remover a quebra de linha do final
-        
-        // Validar se o nome não está em branco e contém apenas letras e espaços
-        int nomeValido = 1;
-        for (int i = 0; novoHospede.nome[i] != '\0'; i++) {
-            if (!isalpha(novoHospede.nome[i]) && novoHospede.nome[i] != ' ') {
-                nomeValido = 0;
-                break;
-            }
-        }
-        if (strlen(novoHospede.nome) == 0 || !nomeValido) {
-            printf("Nome do hospede invalido! Por favor, insira um nome valido sem numeros.\n");
-            return;
-        }
+	if (quartos[andarQuarto - 1][numeroQuarto - 1].status == '.') {
+		// Preencher dados do hospede
+		printf("\nDigite o nome do hospede: ");
+		clearInputBuffer();
+		fgets(novoHospede.nome, sizeof(novoHospede.nome), stdin);
+		strtok(novoHospede.nome, "\n"); // Remover a quebra de linha do final
 
-        printf("\nDigite o CPF do hospede (apenas numeros): ");
-        fgets(novoHospede.cpf, sizeof(novoHospede.cpf), stdin);
-        strtok(novoHospede.cpf, "\n"); // Remover a quebra de linha do final
+		// Validar se o nome não está em branco e contém apenas letras e espaços
+		int nomeValido = 1;
+		for (int i = 0; novoHospede.nome[i] != '\0'; i++) {
+			if (!isalpha(novoHospede.nome[i]) && novoHospede.nome[i] != ' ') {
+				nomeValido = 0;
+				break;
+			}
+		}
+		if (strlen(novoHospede.nome) == 0 || !nomeValido) {
+			printf("Nome do hospede invalido! Por favor, insira um nome valido sem numeros.\n");
+			return;
+		}
 
-        // Validar se o CPF não está em branco e possui o tamanho correto e contém apenas números
-        int cpfValido = 1;
-        for (int i = 0; novoHospede.cpf[i] != '\0'; i++) {
-            if (!isdigit(novoHospede.cpf[i])) {
-                cpfValido = 0;
-                break;
-            }
-        }
-        if (strlen(novoHospede.cpf) != 11 || !cpfValido) {
-            printf("CPF do hospede invalido! Por favor, insira um CPF valido.\n");
-            return;
-        }
+		printf("\nDigite o CPF do hospede (apenas numeros): ");
+		fgets(novoHospede.cpf, sizeof(novoHospede.cpf), stdin);
+		strtok(novoHospede.cpf, "\n"); // Remover a quebra de linha do final
 
-        // Atualiza as informações do quarto e altera o status para ocupado
-        strcpy(quartos[andarQuarto - 1][numeroQuarto - 1].nome, novoHospede.nome);
-        strcpy(quartos[andarQuarto - 1][numeroQuarto - 1].cpf, novoHospede.cpf);
-        quartos[andarQuarto - 1][numeroQuarto - 1].status = 'O'; // Ocupado
+		// Validar se o CPF não está em branco e possui o tamanho correto e contém apenas números
+		int cpfValido = 1;
+		for (int i = 0; novoHospede.cpf[i] != '\0'; i++) {
+			if (!isdigit(novoHospede.cpf[i])) {
+				cpfValido = 0;
+				break;
+			}
+		}
+		if (strlen(novoHospede.cpf) != 11 || !cpfValido) {
+			printf("CPF do hospede invalido! Por favor, insira um CPF valido.\n");
+			return;
+		}
 
-        printf("\nCheck-in de %s realizado com sucesso, no quarto %d do andar %d!\n\n", novoHospede.nome, numeroQuarto, andarQuarto);
+		printf("\nDigite o telefone do hospede (apenas numeros, com DDD): ");
+		clearInputBuffer();
+		fgets(novoHospede.telefone, sizeof(novoHospede.telefone), stdin);
+		strtok(novoHospede.telefone, "\n"); // Remover a quebra de linha do final
 
-    } else {
-        printf("\nQuarto ja ocupado ou reservado!\n");
-    }
-    fMostraMat(m, quartos);
+		// Validar se o telefone não está em branco e possui o tamanho correto e contém apenas números
+		int telefoneValido = 1;
+		int digitCount = 0;
+		for (int i = 0; novoHospede.telefone[i] != '\0'; i++) {
+			if (isdigit(novoHospede.telefone[i])) {
+				digitCount++;
+			} else if (novoHospede.telefone[i] != ' ') {
+				telefoneValido = 0;
+				break;
+			}
+		}
+		if (strlen(novoHospede.telefone) != 11 || digitCount != 11 || !telefoneValido) {
+			printf("Telefone do hospede invalido! Por favor, insira um telefone valido.\n");
+			return;
+		}
+
+		// Digitar o email do hóspede
+		printf("\nDigite o email do hospede: ");
+		clearInputBuffer();
+		fgets(novoHospede.email, sizeof(novoHospede.email), stdin);
+		strtok(novoHospede.email, "\n"); // Remover a quebra de linha do final
+
+		// Validar se o email não está em branco e contém o símbolo '@'
+		int emailValido = 0;
+		for (int i = 0; novoHospede.email[i] != '\0'; i++) {
+			if (novoHospede.email[i] == '@') {
+				emailValido = 1;
+				break;
+			}
+		}
+		if (strlen(novoHospede.email) == 0 || !emailValido) {
+			printf("Email do hospede invalido! Por favor, insira um email valido.\n");
+		}
+
+
+		// Atualiza as informações do quarto e altera o status para ocupado
+		strcpy(quartos[andarQuarto - 1][numeroQuarto - 1].nome, novoHospede.nome);
+		strcpy(quartos[andarQuarto - 1][numeroQuarto - 1].cpf, novoHospede.cpf);
+		quartos[andarQuarto - 1][numeroQuarto - 1].status = 'O'; // Ocupado
+
+		printf("\nCheck-in de %s realizado com sucesso, no quarto %d do andar %d!\n\n", novoHospede.nome, numeroQuarto, andarQuarto);
+
+	} else {
+		printf("\nQuarto ja ocupado ou reservado!\n");
+	}
+	fMostraMat(m, quartos);
 }
 
 // CANCELAR RESERVA
@@ -577,14 +634,17 @@ void fInformacoesHospede(int m[20][14], struct stquarto quartos[20][14]) {
 	}
 
 	if (quartos[andarQuarto - 1][numeroQuarto - 1].status == 'O') {
-		printf("\nNome do hospede: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].nome);
-		printf("CPF do hospede: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].cpf);
-		printf("Endereco do hospede:\n");
-		printf("Rua: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.rua);
-		printf("Numero: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.numero);
-		printf("Bairro: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.bairro);
-		printf("Cidade: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.cidade);
-		printf("UF: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.uf);
+		printf("\nNome: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].nome);
+		printf("CPF: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].cpf);
+		printf("Telefone: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].telefone);
+		printf("Email: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].email);
+		printf("Endereco:\n");
+		printf("   Rua: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.rua);
+		printf("   Numero: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.numero);
+		printf("   Bairro: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.bairro);
+		printf("   Cidade: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.cidade);
+		printf("   UF: %s\n", quartos[andarQuarto - 1][numeroQuarto - 1].ender.uf);
+
 		printf("\nInformacoes de %s consultadas com sucesso, no quarto %d do andar %d!\n\n", quartos[andarQuarto - 1][numeroQuarto - 1].nome, numeroQuarto, andarQuarto);
 	} else {
 		printf("\nQuarto nao esta ocupado! Por favor, selecione um quarto ocupado para consultar informacoes.\n");
